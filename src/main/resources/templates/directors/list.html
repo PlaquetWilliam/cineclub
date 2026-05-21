@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}" th:with="title='Réalisateurs'"></head>
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container">
+    <header class="page-header">
+        <div class="page-header__title">
+            <span class="eyebrow">Annuaire</span>
+            <h1 class="page-title">Réalisateurs</h1>
+            <p class="subtitle">Les cinéastes derrière les films du catalogue.</p>
+        </div>
+        <div class="actions">
+            <a class="btn btn--ghost" th:href="@{/}">Accueil</a>
+        </div>
+    </header>
+
+    <div class="director-grid" th:if="${directors != null and !directors.isEmpty()}">
+        <article class="director-card" th:each="director : ${directors}">
+            <div class="director-card__avatar"
+                 th:text="${(director.firstName != null and director.firstName.length() > 0 ? director.firstName.substring(0,1) : '?') + (director.lastName != null and director.lastName.length() > 0 ? director.lastName.substring(0,1) : '')}">
+                AB
+            </div>
+            <div>
+                <h2 class="director-card__name"
+                    th:text="${director.firstName + ' ' + director.lastName}">Nom</h2>
+                <p class="director-card__meta" th:text="${director.nationality}">Nationalité</p>
+                <p class="director-card__meta" th:if="${director.birthDate != null}">
+                    Né(e) le <span th:text="${#temporals.format(director.birthDate, 'dd/MM/yyyy')}">01/01/1970</span>
+                </p>
+                <p class="director-card__meta" th:if="${director.birthDate == null}">Date de naissance inconnue</p>
+            </div>
+        </article>
+    </div>
+
+    <section class="card" th:if="${directors == null or directors.isEmpty()}">
+        <div class="card__body empty-state">
+            <p>Aucun réalisateur enregistré.</p>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

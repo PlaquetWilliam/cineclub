@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}" th:with="title='Inscription'"></head>
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container auth-wrap">
+    <section class="card auth-card auth-card--wide">
+        <div class="card__body">
+            <span class="eyebrow">Nouveau membre</span>
+            <h1 class="page-title">Inscription</h1>
+            <p class="subtitle">Créez un compte pour rejoindre le Ciné Club.</p>
+
+            <p th:if="${error}" class="alert alert--error" th:text="${error}"></p>
+
+            <form class="form" th:action="@{/register}" method="post" th:object="${registerRequest}">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="firstName">Prénom</label>
+                        <input class="input" id="firstName" type="text" th:field="*{firstName}" autocomplete="given-name" required>
+                        <p class="help" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
+                    </div>
+
+                    <div class="field">
+                        <label for="lastName">Nom</label>
+                        <input class="input" id="lastName" type="text" th:field="*{lastName}" autocomplete="family-name" required>
+                        <p class="help" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input class="input" id="email" type="email" th:field="*{email}" autocomplete="email" required>
+                    <p class="help" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                </div>
+
+                <div class="field">
+                    <label for="password">Mot de passe</label>
+                    <input class="input" id="password" type="password" th:field="*{password}" autocomplete="new-password" minlength="8" required>
+                    <p class="help">Au moins 8 caractères.</p>
+                    <p class="help" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+                </div>
+
+                <div class="actions">
+                    <button class="btn btn--primary" type="submit">S'inscrire</button>
+                </div>
+            </form>
+
+            <p class="auth-divider">
+                Déjà inscrit ?
+                <a th:href="@{/login}">Se connecter</a>
+            </p>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

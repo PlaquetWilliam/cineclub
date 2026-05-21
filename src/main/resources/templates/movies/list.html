@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}" th:with="title='Films'"></head>
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container">
+    <header class="page-header">
+        <div class="page-header__title">
+            <span class="eyebrow">Catalogue</span>
+            <h1 class="page-title">Films</h1>
+            <p class="subtitle">Sélectionnez une fiche pour voir le synopsis et les détails.</p>
+        </div>
+        <div class="actions">
+            <a class="btn btn--primary" th:if="${isAdmin}" th:href="@{/movies/new}">Ajouter un film</a>
+            <a class="btn btn--ghost" th:href="@{/}">Accueil</a>
+        </div>
+    </header>
+
+    <div class="movie-grid" th:if="${movies != null and !movies.isEmpty()}">
+        <a class="movie-card" th:each="movie : ${movies}" th:href="@{/movies/{id}(id=${movie.id})}">
+            <h2 class="movie-card__title" th:text="${movie.title}">Titre</h2>
+            <div class="movie-card__meta">
+                <span class="chip" th:text="${movie.releaseYear}">2024</span>
+                <span class="chip chip--muted" th:text="${movie.genre}">Genre</span>
+                <span class="chip chip--muted"><span th:text="${movie.durationMinutes}">120</span> min</span>
+            </div>
+            <p class="movie-card__director">
+                Réalisateur · <strong th:text="${movie.directorFullName != null ? movie.directorFullName : '—'}">Nom</strong>
+            </p>
+        </a>
+    </div>
+
+    <section class="card" th:if="${movies == null or movies.isEmpty()}">
+        <div class="card__body empty-state">
+            <p>Aucun film dans le catalogue pour le moment.</p>
+            <a class="btn btn--primary" th:if="${isAdmin}" th:href="@{/movies/new}">Ajouter le premier film</a>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

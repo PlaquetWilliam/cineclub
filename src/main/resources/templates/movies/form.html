@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}" th:with="title='Ajouter un film'"></head>
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container form-page">
+    <header class="page-header">
+        <div class="page-header__title">
+            <span class="eyebrow">Administration</span>
+            <h1 class="page-title">Ajouter un film</h1>
+            <p class="subtitle">Réservé aux administrateurs du Ciné Club.</p>
+        </div>
+        <div class="actions">
+            <a class="btn btn--ghost" th:href="@{/movies}">Annuler</a>
+        </div>
+    </header>
+
+    <section class="card">
+        <div class="card__body">
+            <form class="form" th:action="@{/movies/new}" method="post" th:object="${movieForm}">
+                <div class="field">
+                    <label for="title">Titre</label>
+                    <input class="input" id="title" type="text" th:field="*{title}" required>
+                    <p class="help" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+                </div>
+
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="releaseYear">Année de sortie</label>
+                        <input class="input" id="releaseYear" type="number" th:field="*{releaseYear}" min="1888" required>
+                        <p class="help" th:if="${#fields.hasErrors('releaseYear')}" th:errors="*{releaseYear}"></p>
+                    </div>
+
+                    <div class="field">
+                        <label for="durationMinutes">Durée (minutes)</label>
+                        <input class="input" id="durationMinutes" type="number" th:field="*{durationMinutes}" min="1" max="1000" required>
+                        <p class="help" th:if="${#fields.hasErrors('durationMinutes')}" th:errors="*{durationMinutes}"></p>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="genre">Genre</label>
+                        <input class="input" id="genre" type="text" th:field="*{genre}" required>
+                        <p class="help" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></p>
+                    </div>
+
+                    <div class="field">
+                        <label for="directorId">Réalisateur</label>
+                        <select class="input" id="directorId" th:field="*{directorId}" required>
+                            <option value="">— Choisir —</option>
+                            <option th:each="director : ${directors}"
+                                    th:value="${director.id}"
+                                    th:text="|${director.firstName} ${director.lastName}|">
+                                Réalisateur
+                            </option>
+                        </select>
+                        <p class="help" th:if="${#fields.hasErrors('directorId')}" th:errors="*{directorId}"></p>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="synopsis">Synopsis</label>
+                    <textarea class="input" id="synopsis" rows="5" th:field="*{synopsis}"></textarea>
+                    <p class="help" th:if="${#fields.hasErrors('synopsis')}" th:errors="*{synopsis}"></p>
+                </div>
+
+                <div class="actions">
+                    <button class="btn btn--primary" type="submit">Enregistrer le film</button>
+                    <a class="btn btn--ghost" th:href="@{/movies}">Retour à la liste</a>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}" th:with="title='Connexion'"></head>
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container auth-wrap">
+    <section class="card auth-card">
+        <div class="card__body">
+            <span class="eyebrow">Espace membre</span>
+            <h1 class="page-title">Connexion</h1>
+            <p class="subtitle">Accédez aux pages protégées du catalogue.</p>
+
+            <p th:if="${success}" class="alert alert--success" th:text="${success}"></p>
+            <p th:if="${error}" class="alert alert--error" th:text="${error}"></p>
+
+            <form class="form" th:action="@{/login}" method="post" th:object="${loginRequest}">
+                <div class="field">
+                    <label for="email">Email</label>
+                    <input class="input" id="email" type="email" th:field="*{email}" autocomplete="email" required>
+                    <p class="help" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                </div>
+
+                <div class="field">
+                    <label for="password">Mot de passe</label>
+                    <input class="input" id="password" type="password" th:field="*{password}" autocomplete="current-password" required>
+                    <p class="help" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+                </div>
+
+                <div class="actions">
+                    <button class="btn btn--primary" type="submit">Se connecter</button>
+                </div>
+            </form>
+
+            <p class="auth-divider">
+                Pas encore de compte ?
+                <a th:href="@{/register}">Créer un compte</a>
+            </p>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

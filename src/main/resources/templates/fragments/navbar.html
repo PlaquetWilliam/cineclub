@@ -1,0 +1,27 @@
+<header class="navbar" th:fragment="navbar" xmlns:th="http://www.thymeleaf.org">
+    <div class="container navbar__inner">
+        <a class="brand" th:href="@{/}">
+            <span class="brand__mark" aria-hidden="true"></span>
+            <span>Ciné Club</span>
+        </a>
+
+        <nav class="navlinks" aria-label="Navigation principale">
+            <a class="navlink" th:href="@{/}" th:classappend="${navHome} ? 'navlink--active' : ''">Accueil</a>
+            <a class="navlink" th:href="@{/movies}" th:classappend="${navMovies} ? 'navlink--active' : ''">Films</a>
+            <a class="navlink" th:href="@{/directors}" th:classappend="${navDirectors} ? 'navlink--active' : ''">Réalisateurs</a>
+        </nav>
+
+        <div class="navbar__auth">
+            <th:block th:if="${!isAuthenticated}">
+                <a class="navlink" th:href="@{/login}">Connexion</a>
+                <a class="navlink navlink--cta" th:href="@{/register}">Inscription</a>
+            </th:block>
+
+            <th:block th:if="${isAuthenticated}">
+                <span class="user-pill" th:text="${currentUserEmail}">email</span>
+                <a class="navlink navlink--cta" th:if="${isAdmin}" th:href="@{/movies/new}">+ Film</a>
+                <a class="navlink" th:href="@{/logout}">Déconnexion</a>
+            </th:block>
+        </div>
+    </div>
+</header>

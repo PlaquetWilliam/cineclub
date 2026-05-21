@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head}" th:with="title='Accueil'"></head>
+<body>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<main class="container">
+    <section class="hero">
+        <div class="hero__grid">
+            <div>
+                <span class="eyebrow">Catalogue cinéma</span>
+                <h1>Votre salle virtuelle de films et de réalisateurs</h1>
+                <p>
+                    Parcourez les fiches, explorez les genres et gérez le catalogue
+                    depuis une interface sobre et immersive.
+                </p>
+                <div class="actions">
+                    <a class="btn btn--primary" th:href="@{/movies}">Explorer les films</a>
+                    <a class="btn btn--ghost" th:href="@{/directors}">Voir les réalisateurs</a>
+                </div>
+            </div>
+
+            <div class="bento" aria-label="Aperçu du catalogue">
+                <div class="bento__item">
+                    <b>Films</b>
+                    <span>Listes en cartes et fiches détaillées avec synopsis</span>
+                </div>
+                <div class="bento__item">
+                    <b>Réalisateurs</b>
+                    <span>Nationalités, dates de naissance et parcours</span>
+                </div>
+                <div class="bento__item">
+                    <b>Compte</b>
+                    <span>Connexion sécurisée par JWT pour les membres</span>
+                </div>
+                <div class="bento__item">
+                    <b>Admin</b>
+                    <span>Ajout de films réservé aux administrateurs</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>
