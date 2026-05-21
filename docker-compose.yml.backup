@@ -1,0 +1,29 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: tp7-cineclub-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data_tp7:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: tp7-cineclub-app
+    restart: always
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    environment:
+      DB_HOST: postgres
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data_tp7:
